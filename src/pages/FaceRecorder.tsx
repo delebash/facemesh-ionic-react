@@ -3,7 +3,14 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/rea
 import SampleComponent from '../components/SampleComponent';
 import './Settings.css';
 
+import { camera, trash, close } from 'ionicons/icons';
+import {IonFab, IonFabButton, IonIcon, IonGrid, IonRow,
+    IonCol, IonImg, IonActionSheet } from '@ionic/react';
+
+import { PreviewCamera } from '../hooks/previewCamera';
+
 const FaceRecorder: React.FC = () => {
+    const { startPreview  } = PreviewCamera ();
   return (
     <IonPage>
       <IonHeader>
@@ -12,12 +19,11 @@ const FaceRecorder: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Face Recorder</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <SampleComponent name="Face Recorder" />
+          <IonFab vertical="bottom" horizontal="center" slot="fixed">
+              <IonFabButton onClick={() => startPreview()}>
+                  <IonIcon icon={camera}></IonIcon>
+              </IonFabButton>
+          </IonFab>
       </IonContent>
     </IonPage>
   );

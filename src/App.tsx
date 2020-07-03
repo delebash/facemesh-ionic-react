@@ -9,8 +9,9 @@ import {
   IonTabButton,
   IonTabs
 } from '@ionic/react';
+
+import { images, square, triangle } from 'ionicons/icons';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle } from 'ionicons/icons';
 import FaceRecorder from './pages/FaceRecorder';
 import Settings from './pages/Settings';
 import Tab3 from './pages/Tab3';
@@ -50,7 +51,7 @@ const App: React.FC = () => (
             <IonLabel>Face Recorder</IonLabel>
           </IonTabButton>
           <IonTabButton tab="Settings" href="/Settings">
-            <IonIcon icon={ellipse} />
+            <IonIcon icon={images} />
             <IonLabel>Settings</IonLabel>
           </IonTabButton>
           <IonTabButton tab="tab3" href="/tab3">
