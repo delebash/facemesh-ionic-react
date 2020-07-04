@@ -1,11 +1,7 @@
 import React from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import SampleComponent from '../components/SampleComponent';
 import './Settings.css';
 
-import { camera, trash, close } from 'ionicons/icons';
-import {IonFab, IonFabButton, IonIcon, IonGrid, IonRow,
-    IonCol, IonImg, IonActionSheet } from '@ionic/react';
 
 const Settings: React.FC = () => {
   return (
@@ -20,9 +16,7 @@ const Settings: React.FC = () => {
           <IonToolbar>
             <IonTitle size="large">Settings</IonTitle>
           </IonToolbar>
-
         </IonHeader>
-          <SampleComponent name="Settings" />
       </IonContent>
     </IonPage>
   );
