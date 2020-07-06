@@ -5,11 +5,13 @@ import './Settings.css';
 import {getCameraList} from '../hooks/VideoCapture'
 
 const Settings: React.FC = () => {
+
     const [cameras, setCamera] = useState([]);
 
     useEffect(() => {
         async function getCameras() {
-            const cameraList = await getCameraList();
+            let cameraList= []
+             cameraList = await getCameraList();
             setCamera(cameraList);
         }
 

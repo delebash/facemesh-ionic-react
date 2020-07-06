@@ -2,7 +2,7 @@ export async function getCameraList() {
 
 
     let cameraList = [];
-
+    await navigator.mediaDevices.getUserMedia({video: true})
     let mediaDevices = await navigator.mediaDevices.enumerateDevices()
 
     mediaDevices.forEach(mediaDevice => {
@@ -12,7 +12,7 @@ export async function getCameraList() {
         };
 
         if (mediaDevice.kind === 'videoinput') {
-            camera.id ='mediaDevice.deviceId;'
+            camera.id =mediaDevice.deviceId
             camera.label = mediaDevice.label
             cameraList.push(camera)
         }
