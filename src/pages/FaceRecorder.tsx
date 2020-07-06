@@ -14,12 +14,7 @@ import '@tensorflow/tfjs'
 
 const FaceRecorder: React.FC = () => {
 
-    let selectedCamera = ''
-    let constraints = {
-        audio: false,
-        video: true
-    };
-
+    let selectedCamera
     let model, ctx, videoWidth, videoHeight, video, canvas
     const VIDEO_SIZE = 500;
     const triangulateMesh = true;
@@ -39,29 +34,30 @@ const FaceRecorder: React.FC = () => {
     }
 
     async function setupCamera() {
-        video = document.getElementById('video');
 
         const stream = await navigator.mediaDevices.getUserMedia({
             'audio': false,
             'video': {
-                facingMode: 'user'
+                facingMode: 'user',
+                deviceId: {exact: selectedCamera}
                 // // Only setting the video to a specified size in order to accommodate a
                 // // point cloud, so on mobile devices accept the default size.
                 // width: VIDEO_SIZE,
                 // height: VIDEO_SIZE
             },
         });
-        video.srcObject = stream;
 
-        return new Promise((resolve) => {
-            video.onloadedmetadata = () => {
-                resolve(video);
-            };
-        });
+        video.srcObject = stream;
+        await video.onloadedmetadata
+        //
+        // return new Promise((resolve) => {
+        //     video.onloadedmetadata = () => {
+        //         resolve(video);
+        //     };
+        // });
     }
 
     async function renderPrediction() {
-
         const predictions = await model.estimateFaces(video);
         ctx.drawImage(
             video, 0, 0, videoWidth, videoHeight, 0, 0, canvas.width, canvas.height);
@@ -91,13 +87,11 @@ const FaceRecorder: React.FC = () => {
                 }
             });
         }
-
         requestAnimationFrame(renderPrediction);
     }
 
     async function main() {
-        //document.getElementById('main').appendChild(stats.dom);
-
+        video = document.getElementById('video');
         await setupCamera();
         video.play();
         videoWidth = video.videoWidth;
@@ -108,8 +102,8 @@ const FaceRecorder: React.FC = () => {
         canvas = document.getElementById('output');
         canvas.width = videoWidth;
         canvas.height = videoHeight;
-        const canvasContainer = document.querySelector('.canvas-wrapper');
-      //  canvasContainer.style = `width: ${videoWidth}px; height: ${videoHeight}px`;
+        //const canvasContainer = document.querySelector('.canvas-wrapper');
+        //  canvasContainer.style = `width: ${videoWidth}px; height: ${videoHeight}px`;
 
         ctx = canvas.getContext('2d');
         ctx.translate(canvas.width, 0);
@@ -127,10 +121,12 @@ const FaceRecorder: React.FC = () => {
             selectedCamera = (document.getElementById("camera") as HTMLInputElement).value
             if (Array.isArray(selectedCamera) === false) {
                 console.log(selectedCamera);
+                main()
             }
         } else {
             console.log('Select Camera on Settings Page')
         }
+
     })
 
     return (
@@ -151,7 +147,9 @@ const FaceRecorder: React.FC = () => {
                         <IonLabel>Stop</IonLabel>
                     </IonTabButton>
                 </IonTabBar>
-                <video id="video"></video>
+                <canvas id="output"></canvas>
+                <video id="video" playsInline>
+                </video>
             </IonContent>
         </IonPage>
     );

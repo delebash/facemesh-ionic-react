@@ -34,7 +34,7 @@ const Settings: React.FC = () => {
                         <IonSelect id="camera" interface="popover" value={cameras} placeholder="Select Camera"
                                    onIonChange={e => setCamera(e.detail.value)}>
                             {cameraList.map(camera => (
-                                <IonSelectOption key={camera.id} value={camera.label}>
+                                <IonSelectOption value={camera.id} key={camera.id}>
                                     {camera.label}
                                 </IonSelectOption>
                             ))}
