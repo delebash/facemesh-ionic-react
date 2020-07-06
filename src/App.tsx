@@ -10,11 +10,10 @@ import {
   IonTabs
 } from '@ionic/react';
 
-import { images, square, triangle } from 'ionicons/icons';
+import { settings, film } from 'ionicons/icons';
 import { IonReactRouter } from '@ionic/react-router';
 import FaceRecorder from './pages/FaceRecorder';
 import Settings from './pages/Settings';
-import Tab3 from './pages/Tab3';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -42,21 +41,16 @@ const App: React.FC = () => (
         <IonRouterOutlet>
           <Route path="/FaceRecorder" component={FaceRecorder} exact={true} />
           <Route path="/Settings" component={Settings} exact={true} />
-          <Route path="/tab3" component={Tab3} />
           <Route path="/" render={() => <Redirect to="/FaceRecorder" />} exact={true} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
           <IonTabButton tab="FaceRecorder" href="/FaceRecorder">
-            <IonIcon icon={triangle} />
+            <IonIcon icon={film} />
             <IonLabel>Face Recorder</IonLabel>
           </IonTabButton>
           <IonTabButton tab="Settings" href="/Settings">
-            <IonIcon icon={images} />
+            <IonIcon icon={settings} />
             <IonLabel>Settings</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
-            <IonIcon icon={square} />
-            <IonLabel>Tab 3</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
