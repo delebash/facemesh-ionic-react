@@ -4,7 +4,7 @@ import {
     IonTitle, IonToolbar
 } from '@ionic/react';
 import './Settings.css';
-import {getCameraList} from '../hooks/VideoCapture'
+import {getCameraList} from '../hooks/GetVideoDevice'
 
 let cameraList = []
 const Settings: React.FC = () => {

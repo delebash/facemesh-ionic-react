@@ -41,7 +41,7 @@ const App: React.FC = () => (
         <IonRouterOutlet>
           <Route path="/FaceRecorder" component={FaceRecorder} exact={true} />
           <Route path="/Settings" component={Settings} exact={true} />
-          <Route path="/" render={() => <Redirect to="/FaceRecorder" />} exact={true} />
+          <Route path="/" render={() => <Redirect to="/Settings" />} exact={true} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
           <IonTabButton tab="FaceRecorder" href="/FaceRecorder">
