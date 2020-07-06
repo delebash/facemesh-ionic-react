@@ -13,7 +13,8 @@ import '@tensorflow/tfjs'
 //import '@tensorflow/tfjs-node-gpu';
 
 const FaceRecorder: React.FC = () => {
-
+    let currentStream;
+    let stream;
     let selectedCamera
     let model, ctx, videoWidth, videoHeight, video, canvas
     const VIDEO_SIZE = 500;
@@ -33,9 +34,22 @@ const FaceRecorder: React.FC = () => {
         ctx.stroke(region);
     }
 
+    function stopMediaTracks(stream) {
+        stream.getTracks().forEach(track => {
+            track.stop();
+        });
+        video.srcObject = null;
+    }
+
+    async function stopCamera() {
+        if (typeof currentStream !== 'undefined') {
+            stopMediaTracks(currentStream);
+        }
+    }
+
     async function setupCamera() {
 
-        const stream = await navigator.mediaDevices.getUserMedia({
+        stream = await navigator.mediaDevices.getUserMedia({
             'audio': false,
             'video': {
                 facingMode: 'user',
@@ -45,16 +59,15 @@ const FaceRecorder: React.FC = () => {
                 // width: VIDEO_SIZE,
                 // height: VIDEO_SIZE
             },
-        });
+        })
 
         video.srcObject = stream;
-        await video.onloadedmetadata
-        //
-        // return new Promise((resolve) => {
-        //     video.onloadedmetadata = () => {
-        //         resolve(video);
-        //     };
-        // });
+
+        return new Promise((resolve) => {
+            video.onloadedmetadata = () => {
+                resolve(video);
+            };
+        });
     }
 
     async function renderPrediction() {
@@ -138,17 +151,17 @@ const FaceRecorder: React.FC = () => {
             </IonHeader>
             <IonContent>
                 <IonTabBar>
-                    <IonTabButton tab="FaceRecorder" href="/FaceRecorder">
+                    <IonTabButton tab="FaceRecorder">
                         <IonIcon icon={recording} class="recording"/>
                         <IonLabel>Record</IonLabel>
                     </IonTabButton>
-                    <IonTabButton tab="FaceRecorder" href="/FaceRecorder">
+                    <IonTabButton tab="FaceRecorder" onClick={() => stopCamera()}>
                         <IonIcon icon={stop} class="stop"/>
                         <IonLabel>Stop</IonLabel>
                     </IonTabButton>
                 </IonTabBar>
                 <canvas id="output"></canvas>
-                <video id="video" playsInline>
+                <video id="video">
                 </video>
             </IonContent>
         </IonPage>
